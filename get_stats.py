@@ -155,13 +155,11 @@ def get_stats():
 
 
 def portal():
-    try:
-        print("Opening Serial...")
-        ser = serial.Serial(PORT, BAUD, timeout=1)
-        print("Serial Opened")
-    except Exception as e:
-        print("Error opening Serial")
-        print(e)
+
+    print("Opening Serial...")
+    ser = serial.Serial(PORT, BAUD, timeout=1)
+    print("Serial Opened")
+
 
     while (True):
         cmd = ser.read(4)
