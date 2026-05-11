@@ -19,5 +19,5 @@ Practable Portal Installable Files for Raspberry Pi & Nano IoT
 	- system will do safe shut down, and MCU will cycle power to raspberry pi.
 	- splash screen will show when raspberry pi is being re-powered.
 
-- for remote shutdown send +3.3v signal to V_sbc-ext terminal from external source for >3000 mS to trigger hard shutdown. 
+- for remote shutdown send +3.3v signal to V_sbc-ext terminal from external source for >=3000 mS to trigger hard shutdown. 
 	- This will power cycle raspberry pi without initiating safe shutdown, and is intended for remote system recovery when the raspberry pi itself is unresponsive.
