@@ -7,8 +7,8 @@ After=network.target
 [Service]
 Type=simple
 User=iwheard
-WorkingDirectory=/home/iwheard/practable-portal/
-ExecStart= /home/iwheard/practable-portal/.portalvenv/bin/python3 /home/iwheard/practable-portal/portal-main.py
+WorkingDirectory=/home/imogen/practable-portal/
+ExecStart= /home/imogen/practable-portal/.portalvenv/bin/python3 /home/imogen/practable-portal/portal-main.py
 Restart=always
 
 [Install]
