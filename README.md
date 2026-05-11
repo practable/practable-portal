@@ -8,9 +8,10 @@ Practable Portal Installable Files for Raspberry Pi & Nano IoT
 
 1. Starting with a fresh Raspberry Pi OS Installable
 2. from CLI run `git clone https://github.com/practable/practable-portal.git`
-3. Run script `./install_portal.sh`, Entering user password when requested
-4. Run script `setup_uart.sh`, or if script fails, enable UART with `raspi-config` tool
-5. reboot raspberry pi
+3. Navigate into portal directory `cd practable-portal`
+4. Run script `./install_portal.sh`, Entering user password when requested
+5. Run script `setup_uart.sh`, or if script fails, enable UART with `raspi-config` tool
+6. reboot raspberry pi
 
 ## Useage
  - Stats screens should populate with values if valid connection between Raspberry Pi and MCU

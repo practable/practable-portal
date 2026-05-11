@@ -64,5 +64,5 @@ setGPIOstate $GPIO_PIN $OFF
 # Shutdown
 echo "Shutting down..."
 sudo shutdown now
-echo "exiting SSH session (I think)"
+echo "exiting SSH session"
 exit
