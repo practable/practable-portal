@@ -66,12 +66,7 @@ const unsigned char practLogo[] PROGMEM = {
 };
 
 
-
-
-
-
-void show_splash() {
-  // Dont know what this does
+void oled_begin(){ // Dont know what this does
   // SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally
   if (!display.begin(SSD1306_SWITCHCAPVCC, OLED_ADDR)) {  // Address 0x3C for 128x32
     Serial.println(F("SSD1306 allocation failed"));
@@ -85,6 +80,13 @@ void show_splash() {
  // display.setCursor(35, 10);
  // display.write("Starting Portal...");
   display.display();
+
+}
+
+
+
+void show_splash() {
+
   if (SHOW_SPASH_SCREEN) {
      display.drawBitmap(0, 20, practLogo, logoW, logoH, 1);  //(x , y bitMap, width, height, color)
       display.display();
@@ -254,6 +256,7 @@ void update_oled() {  // char *Vexp, char *Iexp, char *Vsbc, char *Isbc, char *s
     display.print(F("SBC Power Off"));
   } else if (sbc_power_cycle_state == 4) {
     display.print(F("SBC Reboot"));
+    show_splash(); 
   } else {
     display.print(F("Unknown State"));
   }

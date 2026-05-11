@@ -180,12 +180,19 @@ def portal():
         time.sleep(0.01)
 
 
+def main():
+    print("Practable Portal: Running")
+    try:
+        portal()
+    except KeyboardInterrupt:
+        print("Exiting")
+        raise
+    except Exception as e:
+        traceback.print_exc()
+        print(e)
 
-try:
-    portal()
-except KeyboardInterrupt:
-    print("Exiting")
-    raise
-except Exception as e:
-    traceback.print_exc()
-    print(e)
+
+
+
+if __name__ == "__main__":
+    main()

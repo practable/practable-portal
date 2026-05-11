@@ -1,0 +1,18 @@
+[Unit]
+Description=Run Practable Portal System Info on startup
+Documentation=https://github.com/practable/practable-portal
+After=network.target
+
+
+[Service]
+Type=simple
+User=iwheard
+WorkingDirectory=/home/iwheard/practable-portal/
+ExecStart= /home/iwheard/practable-portal/.portalvenv/bin/python3 /home/iwheard/practable-portal/portal-main.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+
+

@@ -59,6 +59,7 @@ void setup() {
 
 
   Serial.println("Starting OLED");
+  oled_begin();
   show_splash();
   // Set up Triggers as button Objects
   sbcTrig.begin();
