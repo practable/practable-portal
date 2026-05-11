@@ -34,9 +34,11 @@ sudo systemctl daemon-reload
 sudo systemctl enable practable-portal.service
 sudo systemctl start practable-portal.service
 
-systemctl status practable-portal.service
+
 
 echo "practable-portal installation complete"
+echo "check systemd service with: "
+echo "systemctl status practable-portal.service"
 echo "Please run setup_uart.sh if not run already, or setup UART manually"
 
 
