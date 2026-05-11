@@ -46,7 +46,7 @@ void json_to_const_char(StaticJsonDocument<JSON_RX_SIZE> &jsonDoc, const char *j
   }
 }
 
-void get_json_data() {
+void request_json_data() {
   Serial1.print(GET_COMMAND);
   uint8_t received = 0;
   uint32_t start = millis();

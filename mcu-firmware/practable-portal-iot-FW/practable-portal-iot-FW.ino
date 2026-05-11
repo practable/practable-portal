@@ -100,7 +100,7 @@ void loop() {
   if (requestDelay.millisDelay(4000)) {
     // requestData();
     //get_serial_data();
-    get_json_data();
+   request_json_data();
   }
 
   // Voltage/Current Data Collection & Reporting
