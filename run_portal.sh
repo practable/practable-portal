@@ -1,4 +1,4 @@
 #!/bin/bash
 
-source .portalenv/bin/activate
+source .portalvenv/bin/activate
 python3 get_stats.py
