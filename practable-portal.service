@@ -6,7 +6,7 @@ After=network.target
 
 [Service]
 Type=simple
-User=iwheard
+User=imogen
 WorkingDirectory=/home/imogen/practable-portal/
 ExecStart= /home/imogen/practable-portal/.portalvenv/bin/python3 /home/imogen/practable-portal/portal-main.py
 Restart=always
