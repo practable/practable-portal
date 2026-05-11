@@ -17,6 +17,7 @@ python -m pip install --upgrade pip
 
 echo "Updating Python Packages"
 python -m pip install serial
+python -m pip install psutil
 
 echo "exiting .portalvenv"
 deactivate
