@@ -27,7 +27,7 @@ deactivate
 
 #set up the systemd service to run_portal.sh
 echo "copying practable-portal.service to /etc/systemd/system/"
-cp  practable-portal.service /etc/systemd/system/practable-portal.service
+sudo cp  practable-portal.service /etc/systemd/system/practable-portal.service
 
 echo "reloading daemon & starting Service"
 sudo systemctl daemon-reload
@@ -38,4 +38,5 @@ systemctl status practable-portal.service
 
 echo "practable-portal installation complete"
 echo "Please run setup_uart.sh if not run already, or setup UART manually"
+
 
