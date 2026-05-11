@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+echo "removing python portalvenv"
+rm -rf .portalvenv
+
 echo "Stopping practable-portal.service"
 sudo systemctl stop practable-portal.service || true
 
