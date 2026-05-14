@@ -90,4 +90,5 @@ void request_json_data() {
   json_to_const_char(jsonRXdoc, "uptime", stat_strings[UP], STAT_STRING_LENGTH, "Uptime: ");
   json_to_const_char(jsonRXdoc, "ip", stat_strings[IP], STAT_STRING_LENGTH, "IP: ");
   json_to_const_char(jsonRXdoc, "mac", stat_strings[MAC], STAT_STRING_LENGTH, "MAC: ");
+   json_to_const_char(jsonRXdoc, "ping", stat_strings[PING], STAT_STRING_LENGTH, "Ping: ");
 }

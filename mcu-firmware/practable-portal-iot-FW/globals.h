@@ -114,10 +114,11 @@ typedef enum {
   DISK,
   UP,
   IP,
-  MAC
+  MAC,
+  PING
 } statsIDX_t;
 
-#define NUM_STAT_STRINGS 7
+#define NUM_STAT_STRINGS 8
 #define STAT_STRING_LENGTH 20
 
 char temp_stats[20];
@@ -127,18 +128,20 @@ char disk_stats[20];
 char up_stats[20];
 char ip_stats[20];
 char mac_stats[20];
+char ping_stats[20];
 
-char *stat_strings[] = { temp_stats, CPU_stats, mem_stats, disk_stats, up_stats, ip_stats, mac_stats };
+char *stat_strings[] = { temp_stats, CPU_stats, mem_stats, disk_stats, up_stats, ip_stats, mac_stats, ping_stats };
 
 char temp_name[12] = {"Temp:   "};
 char cpu_name[12]  = {" CPU:   "};
 char mem_name[12]  = {" Mem:   "};
 char disk_name[12] = {"Disk:   "};
-char up_name[9]   = {"Uptime: "};
+char up_name[12]   = {"Runtime: "};
 char IP_name[9]   = {"IP: "};
 char mac_name[9]  = {"MAC:"};
+char ping_name[9] = {"Ping: "};
 
-char *stat_names[] = {temp_name, cpu_name, mem_name, disk_name, up_name, IP_name, mac_name};
+char *stat_names[] = {temp_name, cpu_name, mem_name, disk_name, up_name, IP_name, mac_name, ping_name};
 
 char temp_unit[6] = {" degC"};
 char cpu_unit[6] = {" %"};
@@ -147,8 +150,9 @@ char disk_unit[6] = {" %"};
 char up_unit[6] = {""};
 char IP_unit[6] = {""};
 char mac_unit[6] = {""};
+char ping_unit[6] = {""};
 
-char *stat_units[] = {temp_unit, cpu_unit, mem_unit, disk_unit, up_unit, IP_unit, mac_unit};
+char *stat_units[] = {temp_unit, cpu_unit, mem_unit, disk_unit, up_unit, IP_unit, mac_unit, ping_unit};
 
 char sample_temp[20] = { "44.8 degC" };
 char sample_cpu[20] = { "0.1 %" };
@@ -157,8 +161,9 @@ char sample_disk[20] = { "22.3911 %" };
 char sample_uptime[20] = { "1:52:26" };
 char sample_ip[20] = { "10.42.0.20" };
 char sample_mac[20] = { "DC:A6:32:A2:68:D4" };
+char sample_ping[20] = {"2"};
 
-char *sample_strings[] = { sample_temp, sample_cpu, sample_mem, sample_disk, sample_uptime, sample_ip, sample_mac };
+char *sample_strings[] = { sample_temp, sample_cpu, sample_mem, sample_disk, sample_uptime, sample_ip, sample_mac, sample_ping };
 
 uint8_t i2c_attempts = 0;
 

@@ -166,18 +166,26 @@ void power_stats_screen() {
 void rpi_network_screen() {
 
   display.drawRoundRect(0, 16, 128, 48, 2, WHITE);  // x, y, w, h, colour
-  display.fillRoundRect(9, 20, 110, 14, 4, WHITE);  // x, y, w, h, colour
-  display.setTextColor(BLACK);
-  display.setCursor(17, 24);
+ // display.fillRoundRect(9, 20, 110, 14, 4, WHITE);  // x, y, w, h, colour
+  //display.setTextColor(BLACK);
+  display.setTextColor(WHITE);
+
+  display.setCursor(17, 24);   
   display.print(stat_names[UP]);
   display.print(stat_strings[UP]);
-  display.setTextColor(WHITE);
+
+  display.setCursor(COL_0, 30);   
+  display.print(stat_names[PING]);
+  display.print(stat_strings[PING]);
+
+
   display.setCursor(COL_0, 38);
-  display.print(stat_names[MAC]);
-  display.print(stat_strings[MAC]);
-  display.setCursor(COL_0, 52);
   display.print(stat_names[IP]);
   display.print(stat_strings[IP]);
+
+  display.setCursor(COL_0, 52);
+   display.print(stat_names[MAC]);
+  display.print(stat_strings[MAC]);
 }
 
 void rpi_stats_screen() {
@@ -264,7 +272,7 @@ void update_oled() {  // char *Vexp, char *Iexp, char *Vsbc, char *Isbc, char *s
 
   screen_timer(currentScreen);
 
-  run_screen_num(currentScreen);  //currentScreen  NETWORK
+  run_screen_num(NETWORK);  //currentScreen  NETWORK 
 
   // power_stats_screen();
   // rpi_network_screen();

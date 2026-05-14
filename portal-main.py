@@ -146,8 +146,8 @@ def get_ping(timeout=1):
 
     if _last_ping is None:
         return None
-
-    return now - _last_ping
+    time_since =  f"{now - _last_ping:.2f}"
+    return time_since
 
 
 
