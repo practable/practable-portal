@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# Copyright (c) 2023 Richard Hull and contributors
-# See LICENSE.rst for details.
+#
+#
 
 '''
 It provides lookup of CPU, memory, disk utilization, temperature, IP address and system Uptime.
@@ -16,12 +16,9 @@ import json
 import serial
 from pathlib import Path
 from datetime import datetime
-#from demo_opts import get_device
-#from luma.core.render import canvas
-#from luma.core.virtual import viewport
-#from PIL import ImageFont
-#from PIL import Image
-#from PIL import ImageOps
+import subprocess
+import platform
+import time
 import psutil
 import subprocess as sp
 import socket
@@ -33,7 +30,7 @@ BAUD = 115200
 
 STR_LEN = 20
 
-
+_last_ping = None
 
 
 def pack_strings(strings):
@@ -108,13 +105,59 @@ def get_ip(network_interface_name):
 def get_mac():
     return ':'.join(f'{(uuid.getnode() >> i) & 0xFF:02X}' for i in range(0, 48, 8)[::-1])
 
+def get_ping(timeout=1):
+    """
+        Ping 8.8.8.8 once.
+
+        Returns:
+            float | None:
+                Seconds since the last successful ping.
+                Returns None if no successful ping has happened yet.
+        """
+    global _last_ping
+
+    now = time.time()
+
+    system = platform.system().lower()
+
+    if system == "windows":
+        cmd = ["ping", "-n", "1", "-w", str(timeout * 1000), "8.8.8.8"]
+    else:
+        cmd = ["ping", "-c", "1", "-W", str(timeout), "8.8.8.8"]
+
+    try:
+        result = subprocess.run(
+            cmd,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        )
+
+        if result.returncode == 0:
+            if _last_ping is None:
+                elapsed = 0
+            else:
+                elapsed = now - _last_ping
+
+            _last_ping = now
+            return elapsed
+
+    except Exception:
+        pass
+
+    if _last_ping is None:
+        return None
+
+    return now - _last_ping
+
+
+
 def format_percent(percent):
     return "%5.1f" % (percent)
 
 
-stat_names = ["Temp: ", "CPU: ", "Mem: ", "Disk: ", "Uptime: ", "IP: ", "MAC: "]
+stat_names = ["Temp: ", "CPU: ", "Mem: ", "Disk: ", "Uptime: ", "IP: ", "MAC: ", "Ping: "]
 
-def make_json(temp, cpu, mem, disk, uptime, ip, mac):
+def make_json(temp, cpu, mem, disk, uptime, ip, mac, ping):
     return json.dumps({
         "temp": temp,
         "cpu": cpu,
@@ -122,7 +165,8 @@ def make_json(temp, cpu, mem, disk, uptime, ip, mac):
         "disk":disk,
         "uptime":uptime,
         "ip":ip,
-        "mac":mac
+        "mac":mac,
+        "ping":ping
     })
 
 def get_stats():
@@ -133,7 +177,8 @@ def get_stats():
         get_disk_usage(),
         get_uptime(),
         get_ipv4_address(None),
-        get_mac()
+        get_mac(),
+        get_ping()
     )
     #obj = json.loads(data)
     #for k, v in obj.items():
