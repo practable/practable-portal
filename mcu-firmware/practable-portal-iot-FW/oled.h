@@ -169,31 +169,47 @@ void rpi_network_screen() {
                                                     // display.fillRoundRect(9, 20, 110, 14, 4, WHITE);  // x, y, w, h, colour
   //display.setTextColor(BLACK);
   display.setTextColor(WHITE);
+  char lineBuffer[126];
 
   display.setCursor(COL_0, 18);
-  display.print(stat_names[UP]);
+  sprintf(lineBuffer, "%s %10s", stat_names[UP], stat_strings[UP]);
+  //display.print(stat_names[UP]);
 
-  display.setCursor(128 - strlen(stat_strings[UP]) * 8, 18);
-  display.print(stat_strings[UP]);
+  // display.setCursor(128 - strlen(stat_strings[UP]) * 8, 18);
+  // display.print(stat_strings[UP]);
+  display.print(lineBuffer);
 
   display.setCursor(COL_0, 29);
-  display.print(stat_names[PING]);
-  uint8_t pingPixels = (strlen(stat_strings[PING]) * 8) - 6; // the -6 accoutns for the decimal point
-  display.setCursor(126 - pingPixels, 29);
+  //display.print(stat_names[PING]);
+
+  // display.setCursor(73+(45-pingPixels), 29);
   if (strcmp_P(stat_strings[PING], "0.0") == 0) {  // if time is equal to 0, then print text white
-                                                   // do nothing different
+    sprintf(lineBuffer, "%s %8s\0", stat_names[PING], stat_strings[PING]);
+    display.print(lineBuffer);
   } else {
-    display.setTextColor(BLACK);                                                         // else set text colour black and print a box to highlight number
-    display.fillRoundRect(122 - pingPixels, 28, 124 - (124 - pingPixels), 9, 2, WHITE);  // x, y, w, h, colour
+    display.print(stat_names[PING]);
+    display.setTextColor(BLACK);                     // else set text colour black and print a box to highlight number
+    display.fillRoundRect(71, 28, 50, 9, 2, WHITE);  // x, y, w, h, colour
+    display.setCursor(72, 29);
+    sprintf(lineBuffer, "%8s", stat_strings[PING]);
+    display.print(lineBuffer);
   }
-  display.print(stat_strings[PING]);
+  // display.print(stat_strings[PING]);
+//  sprintf(lineBuffer, "%8s", stat_strings[PING]);
+ // display.print(lineBuffer);
+
+
   // set text back to white
   display.setTextColor(WHITE);
-
   display.setCursor(COL_0, 41);
-  display.print(stat_names[IP]);
-  display.setCursor(126 - strlen(stat_strings[IP]) * 8, 41);
-  display.print(stat_strings[IP]);
+  // display.print(stat_names[IP]);
+  // display.setCursor(126 - strlen(stat_strings[IP]) * 7, 41);
+  if (strcmp_P(stat_strings[IP], "\0") == 0) {
+    display.fillRoundRect(71, 40, 50, 9, 2, WHITE);  // x, y, w, h, colour
+  }
+  // display.print(stat_strings[IP]);
+  sprintf(lineBuffer, "%s%16s\0", stat_names[IP], stat_strings[IP]);
+  display.print(lineBuffer);
 
   display.setCursor(COL_0, 53);
   display.print(stat_names[MAC]);
@@ -283,9 +299,11 @@ void update_oled() {  // char *Vexp, char *Iexp, char *Vsbc, char *Isbc, char *s
   // display.setTextSize(1.9);  // Draw 2X-scale text
 
   screen_timer(currentScreen);
-
-  run_screen_num(NETWORK);  //currentScreen  NETWORK
-
+  if (sbc_power_cycle_state == 4) {
+    // dont run the normal screen
+  } else {
+    run_screen_num(NETWORK);  //currentScreen  NETWORK
+  }
   // power_stats_screen();
   // rpi_network_screen();
   //  rpi_stats_screen();
