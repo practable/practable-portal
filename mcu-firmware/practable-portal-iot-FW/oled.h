@@ -170,7 +170,7 @@ void rpi_network_screen() {
   //display.setTextColor(BLACK);
   display.setTextColor(WHITE);
 
-  display.setCursor(17, 24);   
+  display.setCursor(COL_0, 17);   
   display.print(stat_names[UP]);
   display.print(stat_strings[UP]);
 

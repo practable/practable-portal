@@ -134,18 +134,18 @@ def get_ping(timeout=1):
 
         if result.returncode == 0:
             if _last_ping is None:
-                elapsed = 0
+                elapsed = "0"
             else:
                 elapsed = now - _last_ping
 
             _last_ping = now
-            return elapsed
+            return f"{elapsed:.2f}"
 
     except Exception:
         pass
 
     if _last_ping is None:
-        return None
+        return "None"
     time_since = now - _last_ping
     formatted = f"{time_since:.2f}"
     return formatted

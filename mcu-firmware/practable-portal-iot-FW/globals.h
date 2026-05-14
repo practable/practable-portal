@@ -139,7 +139,7 @@ char disk_name[12] = {"Disk:   "};
 char up_name[12]   = {"Runtime: "};
 char IP_name[9]   = {"IP: "};
 char mac_name[9]  = {"MAC:"};
-char ping_name[9] = {"Ping: "};
+char ping_name[12] = {"Last Ping: "};
 
 char *stat_names[] = {temp_name, cpu_name, mem_name, disk_name, up_name, IP_name, mac_name, ping_name};
 
