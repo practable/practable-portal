@@ -30,7 +30,7 @@ BAUD = 115200
 
 STR_LEN = 20
 
-_last_ping = None
+_last_successful_ping = None
 
 
 def pack_strings(strings):
@@ -107,14 +107,12 @@ def get_mac():
 
 def get_ping(timeout=1):
     """
-        Ping 8.8.8.8 once.
-
         Returns:
-            float | None:
-                Seconds since the last successful ping.
-                Returns None if no successful ping has happened yet.
+            0.0 if ping succeeds now
+            seconds since last successful ping if ping fails
+            None if no successful ping has ever occurred
         """
-    global _last_ping
+    global _last_successful_ping
 
     now = time.time()
 
@@ -133,22 +131,16 @@ def get_ping(timeout=1):
         )
 
         if result.returncode == 0:
-            if _last_ping is None:
-                elapsed = "0"
-            else:
-                elapsed = now - _last_ping
-
-            _last_ping = now
-            return f"{elapsed:.2f}"
+            _last_successful_ping = now
+            return "0.0"
 
     except Exception:
         pass
 
-    if _last_ping is None:
+    if _last_successful_ping is None:
         return "None"
-    time_since = now - _last_ping
-    formatted = f"{time_since:.2f}"
-    return formatted
+
+    return f"{now - _last_successful_ping:.2f}"
 
 
 
