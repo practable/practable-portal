@@ -140,7 +140,7 @@ def get_ping(timeout=1):
     if _last_successful_ping is None:
         return "None"
 
-    return f"{now - _last_successful_ping:.2f}"
+    return f"{now - _last_successful_ping:.0f}"
 
 
 

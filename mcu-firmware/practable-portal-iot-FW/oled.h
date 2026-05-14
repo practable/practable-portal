@@ -1,3 +1,4 @@
+#include "avr/pgmspace.h"
 
 
 
@@ -66,7 +67,7 @@ const unsigned char practLogo[] PROGMEM = {
 };
 
 
-void oled_begin(){ // Dont know what this does
+void oled_begin() {  // Dont know what this does
   // SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally
   if (!display.begin(SSD1306_SWITCHCAPVCC, OLED_ADDR)) {  // Address 0x3C for 128x32
     Serial.println(F("SSD1306 allocation failed"));
@@ -77,10 +78,9 @@ void oled_begin(){ // Dont know what this does
   }
   display.setTextColor(SSD1306_WHITE);
   display.clearDisplay();
- // display.setCursor(35, 10);
- // display.write("Starting Portal...");
+  // display.setCursor(35, 10);
+  // display.write("Starting Portal...");
   display.display();
-
 }
 
 
@@ -88,13 +88,13 @@ void oled_begin(){ // Dont know what this does
 void show_splash() {
 
   if (SHOW_SPASH_SCREEN) {
-     display.drawBitmap(0, 20, practLogo, logoW, logoH, 1);  //(x , y bitMap, width, height, color)
-      display.display();
+    display.drawBitmap(0, 20, practLogo, logoW, logoH, 1);  //(x , y bitMap, width, height, color)
+    display.display();
 
-     delay(1000);
-     display.invertDisplay(true);
-      delay(500);
-      display.invertDisplay(false);
+    delay(1000);
+    display.invertDisplay(true);
+    delay(500);
+    display.invertDisplay(false);
   }
 }
 
@@ -121,7 +121,7 @@ void show_splash() {
 void power_stats_screen() {
   display.setTextColor(WHITE);
   display.drawRoundRect(0, 16, 128, 22, 2, WHITE);  // x, y, w, h, colour
-  display.fillRoundRect(10, 27, 57, 9, 2, WHITE);    // x, y, w, h, colour
+  display.fillRoundRect(10, 27, 57, 9, 2, WHITE);   // x, y, w, h, colour
   display.setCursor(COL_0, ROW_1);
   display.print(F("Experiment: "));
   display.setCursor(COL_3, ROW_1);
@@ -138,7 +138,7 @@ void power_stats_screen() {
 
 
   display.drawRoundRect(0, 39, 128, 22, 2, WHITE);  // x, y, w, h, colour
-  display.fillRoundRect(10, 50, 57, 9, 2, WHITE);    // x, y, w, h, colour
+  display.fillRoundRect(10, 50, 57, 9, 2, WHITE);   // x, y, w, h, colour
   display.setCursor(COL_0, ROW_3);
   display.print(F("SBC: "));
   display.setCursor(COL_3, ROW_3);
@@ -166,25 +166,37 @@ void power_stats_screen() {
 void rpi_network_screen() {
 
   display.drawRoundRect(0, 16, 128, 48, 2, WHITE);  // x, y, w, h, colour
- // display.fillRoundRect(9, 20, 110, 14, 4, WHITE);  // x, y, w, h, colour
+                                                    // display.fillRoundRect(9, 20, 110, 14, 4, WHITE);  // x, y, w, h, colour
   //display.setTextColor(BLACK);
   display.setTextColor(WHITE);
 
-  display.setCursor(COL_0, 17);   
+  display.setCursor(COL_0, 18);
   display.print(stat_names[UP]);
+
+  display.setCursor(128 - strlen(stat_strings[UP]) * 8, 18);
   display.print(stat_strings[UP]);
 
-  display.setCursor(COL_0, 30);   
+  display.setCursor(COL_0, 29);
   display.print(stat_names[PING]);
+  uint8_t pingPixels = (strlen(stat_strings[PING]) * 8) - 6; // the -6 accoutns for the decimal point
+  display.setCursor(126 - pingPixels, 29);
+  if (strcmp_P(stat_strings[PING], "0.0") == 0) {  // if time is equal to 0, then print text white
+                                                   // do nothing different
+  } else {
+    display.setTextColor(BLACK);                                                         // else set text colour black and print a box to highlight number
+    display.fillRoundRect(122 - pingPixels, 28, 124 - (124 - pingPixels), 9, 2, WHITE);  // x, y, w, h, colour
+  }
   display.print(stat_strings[PING]);
+  // set text back to white
+  display.setTextColor(WHITE);
 
-
-  display.setCursor(COL_0, 38);
+  display.setCursor(COL_0, 41);
   display.print(stat_names[IP]);
+  display.setCursor(126 - strlen(stat_strings[IP]) * 8, 41);
   display.print(stat_strings[IP]);
 
-  display.setCursor(COL_0, 52);
-   display.print(stat_names[MAC]);
+  display.setCursor(COL_0, 53);
+  display.print(stat_names[MAC]);
   display.print(stat_strings[MAC]);
 }
 
@@ -264,7 +276,7 @@ void update_oled() {  // char *Vexp, char *Iexp, char *Vsbc, char *Isbc, char *s
     display.print(F("SBC Power Off"));
   } else if (sbc_power_cycle_state == 4) {
     display.print(F("SBC Reboot"));
-    show_splash(); 
+    show_splash();
   } else {
     display.print(F("Unknown State"));
   }
@@ -272,7 +284,7 @@ void update_oled() {  // char *Vexp, char *Iexp, char *Vsbc, char *Isbc, char *s
 
   screen_timer(currentScreen);
 
-  run_screen_num(NETWORK);  //currentScreen  NETWORK 
+  run_screen_num(NETWORK);  //currentScreen  NETWORK
 
   // power_stats_screen();
   // rpi_network_screen();
