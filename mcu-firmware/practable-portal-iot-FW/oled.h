@@ -302,7 +302,7 @@ void update_oled() {  // char *Vexp, char *Iexp, char *Vsbc, char *Isbc, char *s
   if (sbc_power_cycle_state == 4) {
     // dont run the normal screen
   } else {
-    run_screen_num(NETWORK);  //currentScreen  NETWORK
+    run_screen_num(currentScreen);  //currentScreen  NETWORK
   }
   // power_stats_screen();
   // rpi_network_screen();
