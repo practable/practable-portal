@@ -43,7 +43,7 @@ def pack_strings(strings):
 
 
 def get_temp():
-    temp = float(sp.getoutput("vcgencmd measure_temp").split("=")[1].split("'")[0])
+    temp = float(sp.getoutput("sudo vcgencmd measure_temp").split("=")[1].split("'")[0])
     return f"{temp:.2f}"
 
 
