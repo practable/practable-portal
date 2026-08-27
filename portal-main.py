@@ -24,6 +24,7 @@ import subprocess as sp
 import socket
 from collections import OrderedDict
 import uuid
+from getmac import get_mac_address as gma
 
 PORT = "/dev/serial0"
 BAUD = 115200
@@ -103,7 +104,7 @@ def get_ip(network_interface_name):
     return "IP: %s" % (get_ipv4_address(network_interface_name))
 
 def get_mac():
-    return ':'.join(f'{(uuid.getnode() >> i) & 0xFF:02X}' for i in range(0, 48, 8)[::-1])
+    return f'{gma()}'
 
 def get_ping(timeout=1):
     """

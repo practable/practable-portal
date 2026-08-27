@@ -21,7 +21,7 @@ python -m pip install --upgrade pip
 echo "Updating Python Packages"
 python -m pip install pyserial
 python -m pip install psutil
-
+python -m pip install getmac
 echo "exiting .portalvenv"
 deactivate
 
