@@ -1,5 +1,6 @@
 # practable-portal
 Practable Portal Installable Files for Raspberry Pi & Nano IoT
+For Portal Hardware Development Repo: https://github.com/practable/practable-portal-hardware
 
 ## Nano IoT33 Installation
 1. flash firmware `mcu-firmware/practable-portal-iot-FW` to Nano IoT33 Controller 
