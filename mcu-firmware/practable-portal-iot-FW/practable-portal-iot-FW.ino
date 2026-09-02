@@ -10,6 +10,10 @@ Example functions for printing bitmap images to SSD1306 OLED screen
 V0.0.2 (in dev) -> OLED allocating correctly
 Sketch uses 18854 bytes (61%) of program storage space. Maximum is 30720 bytes.
 Global variables use 623 bytes (30%) of dynamic memory, leaving 1425 bytes for local variables. Maximum is 2048 bytes.
+
+V1.0.1
+-> added versioning to screen
+
 */
 
 
@@ -23,7 +27,9 @@ void setup() {
   Serial.begin(115200);
   Serial1.begin(115200);
   delay(2500);
-  Serial.println(F("\nPractable Portal\nFW: V1.0.0"));
+  Serial.print(F("\nPractable Portal\n"));
+  Serial.print("FW: ");
+  Serial.println(FIRMWARE_VERSION);
   Wire.end();
 
   // i2c_scan();
@@ -66,7 +72,7 @@ void setup() {
   extTrig.begin();
   expTrig.begin();
 
- // Serial.println(F("Loading Dummy Data"));
+  // Serial.println(F("Loading Dummy Data"));
   // load_data();  // just for testing screen layout
 
 
@@ -101,7 +107,7 @@ void loop() {
   if (requestDelay.millisDelay(4000)) {
     // requestData();
     //get_serial_data();
-   request_json_data();
+    request_json_data();
   }
 
   // Voltage/Current Data Collection & Reporting

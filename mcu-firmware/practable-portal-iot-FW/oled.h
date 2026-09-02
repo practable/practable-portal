@@ -282,10 +282,12 @@ void update_oled() {  // char *Vexp, char *Iexp, char *Vsbc, char *Isbc, char *s
 
   display.setTextColor(BLACK);
   display.fillRoundRect(0, 0, 128, 12, 2, WHITE);  // x, y, w, h, colour
-  // display.setFont(&FreeMonoBold9pt7b);
+//   display.setFont(&FreeMonoBold9pt7b);
   display.setCursor(COL_0, ROW_0);  //(x,y) (COL, ROW)
   if (sbc_power_cycle_state == 0) {
-    display.print(F("  Practable Portal"));
+    char printBuffer[22];
+    sprintf(printBuffer, "PractablePortal %s",  FIRMWARE_VERSION);
+    display.print(printBuffer); 
   } else if (sbc_power_cycle_state == 2) {
     display.print(F("Rx SBC Shutdown"));
   } else if (sbc_power_cycle_state == 3) {

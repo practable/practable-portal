@@ -19,6 +19,9 @@
 #include <autoDelay.h>
 
 
+#define FIRMWARE_VERSION "1.0.1"
+
+
 // Configuration
 #define ENABLE_LOCAL_OLED true  // Not implemented yet, when true Arduino controls OLED screen, when false, RPi controls OLED Screen
 #define SHOW_SPASH_SCREEN true
