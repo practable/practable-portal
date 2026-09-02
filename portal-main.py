@@ -42,6 +42,8 @@ def pack_strings(strings):
         out.extend(b)
     return out
 
+def get_name():
+    name = "name"
 
 def get_temp():
     temp = float(sp.getoutput("sudo vcgencmd measure_temp").split("=")[1].split("'")[0])
