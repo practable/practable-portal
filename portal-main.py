@@ -212,6 +212,7 @@ def portal():
             ser.write(json_payload.encode('ascii'))
             ser.write(b'\n')
 
+        print("Name: ", get_name())
         print("Temp: ", get_temp(), " degC")
         print("CPU: ", get_cpu(), " %")
         print("Mem: ", get_mem(),  " %")
