@@ -220,6 +220,7 @@ def portal():
         print("Uptime: ", get_uptime())
         print("IP: ",get_ipv4_address(None))
         print("MAC: ", get_mac())
+        print("\n")
         time.sleep(0.01)
 
 
