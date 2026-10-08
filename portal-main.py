@@ -43,6 +43,7 @@ def pack_strings(strings):
     return out
 
 def get_name():
+
     name = "name"
 
 def get_temp():
@@ -211,13 +212,13 @@ def portal():
             ser.write(json_payload.encode('ascii'))
             ser.write(b'\n')
 
-        #print("Temp: ", get_temp(), " degC")
-        #print("CPU: ", get_cpu(), " %")
-        #print("Mem: ", get_mem(),  " %")
-        #print("Disk: ", get_disk_usage(), " %")
-        #print("Uptime: ", get_uptime())
-        #print("IP: ",get_ipv4_address(None))
-        #print("MAC: ", get_mac())
+        print("Temp: ", get_temp(), " degC")
+        print("CPU: ", get_cpu(), " %")
+        print("Mem: ", get_mem(),  " %")
+        print("Disk: ", get_disk_usage(), " %")
+        print("Uptime: ", get_uptime())
+        print("IP: ",get_ipv4_address(None))
+        print("MAC: ", get_mac())
         time.sleep(0.01)
 
 
