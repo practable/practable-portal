@@ -46,6 +46,46 @@ void json_to_const_char(StaticJsonDocument<JSON_RX_SIZE> &jsonDoc, const char *j
   }
 }
 
+void json_time_format_handler(StaticJsonDocument<JSON_RX_SIZE> &jsonDoc, const char *json_cmd, char *target_string, uint8_t target_length, const char *label) {
+
+  if (!jsonDoc.containsKey(json_cmd)) {
+    target_string[0] = '\0';
+    return;
+  }
+
+  const char *temp_buffer = jsonDoc[json_cmd].as<const char *>();
+
+  uint32_t days = 0;
+  uint32_t hours = 0;
+  uint32_t minutes = 0;
+  uint32_t seconds = 0;
+
+  // Parse:
+  // Format: "1 day, 0:06:34"
+  if (sscanf(temp_buffer, "%lu day%*[^,], %lu:%lu:%lu", &days, &hours, &minutes, &seconds) == 4) {
+    // Parsed days and time
+  } else if (sscanf(temp_buffer, "%lu:%lu:%lu", &hours, &minutes, &seconds) == 3) {  // Format: "0:06:34"
+    days = 0;
+  } else {
+    target_string[0] = '\0';
+    return;
+  }
+
+  snprintf(target_string, target_length, "%3lu d %02lu:%02lu:%02lu", days, hours, minutes, seconds);
+}
+
+
+void string_to_uppercase(char *str){
+  while (*str) {
+        *str = toupper((unsigned char)*str);
+        str++;
+    }
+}
+
+
+
+
+
 void request_json_data() {
   Serial1.print(GET_COMMAND);
   uint8_t received = 0;
@@ -81,14 +121,19 @@ void request_json_data() {
 
       //  JsonObject root = jsonRXdoc.as<JsonObject>();
     }
-  }  
+  }
   // these need to be here so they update and clear out old data when the rpi fails to respond to a command
+  json_to_const_char(jsonRXdoc, "name", stat_strings[NAME], STAT_STRING_LENGTH, "");
   json_to_const_char(jsonRXdoc, "temp", stat_strings[TEMP], STAT_STRING_LENGTH, "Temp: ");
   json_to_const_char(jsonRXdoc, "cpu", stat_strings[CPU], STAT_STRING_LENGTH, "CPU: ");
   json_to_const_char(jsonRXdoc, "mem", stat_strings[MEM], STAT_STRING_LENGTH, "Mem: ");
   json_to_const_char(jsonRXdoc, "disk", stat_strings[DISK], STAT_STRING_LENGTH, "Disk: ");
-  json_to_const_char(jsonRXdoc, "uptime", stat_strings[UP], STAT_STRING_LENGTH, "Uptime: ");
+
+  json_time_format_handler(jsonRXdoc, "uptime", stat_strings[UP], STAT_STRING_LENGTH, "Live: ");  // this needs to change to accomidate different formats of time strings
+  //json_to_const_char(jsonRXdoc, "uptime", stat_strings[UP], STAT_STRING_LENGTH, "Live");
+
   json_to_const_char(jsonRXdoc, "ip", stat_strings[IP], STAT_STRING_LENGTH, "IP: ");
   json_to_const_char(jsonRXdoc, "mac", stat_strings[MAC], STAT_STRING_LENGTH, "MAC: ");
-   json_to_const_char(jsonRXdoc, "ping", stat_strings[PING], STAT_STRING_LENGTH, "Ping: ");
+  json_to_const_char(jsonRXdoc, "ping", stat_strings[PING], STAT_STRING_LENGTH, "Ping: ");
+  string_to_uppercase(stat_strings[MAC]);
 }

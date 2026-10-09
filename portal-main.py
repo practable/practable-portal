@@ -12,6 +12,7 @@ It provides lookup of CPU, memory, disk utilization, temperature, IP address and
 import time
 import traceback
 import json
+import re
 
 import serial
 from pathlib import Path
@@ -42,6 +43,23 @@ def pack_strings(strings):
         out.extend(b)
     return out
 
+def get_name():
+    path = "/etc/practable/jump.env"
+
+    try:
+        with open(path, "r") as f:
+            contents = f.read()
+    except FileNotFoundError:
+        raise FileNotFoundError(f"Required file not found: {path}")
+
+    match = re.search(r"\b[A-Za-z]{4}\d{2}\b", contents)
+
+    if not match:
+        raise ValueError(
+            f"No valid code found in {path}. "
+            "Expected 4 letters followed by 2 numbers, e.g. ABCD12."
+        )
+    return match.group(0)
 
 def get_temp():
     temp = float(sp.getoutput("sudo vcgencmd measure_temp").split("=")[1].split("'")[0])
@@ -151,8 +169,9 @@ def format_percent(percent):
 
 stat_names = ["Temp: ", "CPU: ", "Mem: ", "Disk: ", "Uptime: ", "IP: ", "MAC: ", "Ping: "]
 
-def make_json(temp, cpu, mem, disk, uptime, ip, mac, ping):
+def make_json(name, temp, cpu, mem, disk, uptime, ip, mac, ping):
     return json.dumps({
+        "name":name,
         "temp": temp,
         "cpu": cpu,
         "mem":mem,
@@ -165,6 +184,7 @@ def make_json(temp, cpu, mem, disk, uptime, ip, mac, ping):
 
 def get_stats():
     data = make_json(
+        get_name(),
         get_temp(),
         get_cpu(),
         get_mem(),
@@ -209,13 +229,15 @@ def portal():
             ser.write(json_payload.encode('ascii'))
             ser.write(b'\n')
 
-        #print("Temp: ", get_temp(), " degC")
-        #print("CPU: ", get_cpu(), " %")
-        #print("Mem: ", get_mem(),  " %")
-        #print("Disk: ", get_disk_usage(), " %")
-        #print("Uptime: ", get_uptime())
-        #print("IP: ",get_ipv4_address(None))
-        #print("MAC: ", get_mac())
+     #  print("Name: ", get_name())
+    #  print("Temp: ", get_temp(), " degC")
+    #   print("CPU: ", get_cpu(), " %")
+    #   print("Mem: ", get_mem(),  " %")
+    #   print("Disk: ", get_disk_usage(), " %")
+    #   print("Uptime: ", get_uptime())
+    #   print("IP: ",get_ipv4_address(None))
+    #   print("MAC: ", get_mac())
+    #   print("\n")
         time.sleep(0.01)
 
 
