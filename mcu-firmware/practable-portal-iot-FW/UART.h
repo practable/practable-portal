@@ -60,29 +60,26 @@ void json_time_format_handler(StaticJsonDocument<JSON_RX_SIZE> &jsonDoc, const c
   uint32_t minutes = 0;
   uint32_t seconds = 0;
 
-  // Format: HH:mm:ss
-  if (sscanf(temp_buffer, "%lu:%lu:%lu", &hours, &minutes, &seconds) == 3) {
-    // Nothing else required
-  }
-  // Format: *** Days, ** Hours, ** Minutes
-  else if (sscanf(temp_buffer, "%lu Days, %lu Hours, %lu Minutes", &days, &hours, &minutes) == 3) {
-    // Seconds remain 0
+  // Parse:
+  // Format: "1 day, 0:06:34"
+  if (sscanf(temp_buffer, "%lu day%*[^,], %lu:%lu:%lu", &days, &hours, &minutes, &seconds) == 4) {
+    // Parsed days and time
+  } else if (sscanf(temp_buffer, "%lu:%lu:%lu", &hours, &minutes, &seconds) == 3) {  // Format: "0:06:34"
+    days = 0;
   } else {
-    // Unknown format
     target_string[0] = '\0';
     return;
   }
 
-  snprintf(target_string,
-           target_length,
-           "%lud %02luh %02lum %02lus",
-           days,
-           hours,
-           minutes,
-           seconds);
+  snprintf(target_string, target_length, "%3lu d %02lu:%02lu:%02lu", days, hours, minutes, seconds);
+}
 
-  Serial.print(label);
-  Serial.println(target_string);
+
+void string_to_uppercase(char *str){
+  while (*str) {
+        *str = toupper((unsigned char)*str);
+        str++;
+    }
 }
 
 
@@ -132,9 +129,11 @@ void request_json_data() {
   json_to_const_char(jsonRXdoc, "mem", stat_strings[MEM], STAT_STRING_LENGTH, "Mem: ");
   json_to_const_char(jsonRXdoc, "disk", stat_strings[DISK], STAT_STRING_LENGTH, "Disk: ");
 
- json_time_format_handler(jsonRXdoc, "uptime", stat_strings[UP], STAT_STRING_LENGTH, "Uptime: ");  // this needs to change to accomidate different formats of time strings
+  json_time_format_handler(jsonRXdoc, "uptime", stat_strings[UP], STAT_STRING_LENGTH, "Live: ");  // this needs to change to accomidate different formats of time strings
+  //json_to_const_char(jsonRXdoc, "uptime", stat_strings[UP], STAT_STRING_LENGTH, "Live");
 
   json_to_const_char(jsonRXdoc, "ip", stat_strings[IP], STAT_STRING_LENGTH, "IP: ");
   json_to_const_char(jsonRXdoc, "mac", stat_strings[MAC], STAT_STRING_LENGTH, "MAC: ");
   json_to_const_char(jsonRXdoc, "ping", stat_strings[PING], STAT_STRING_LENGTH, "Ping: ");
+  string_to_uppercase(stat_strings[MAC]);
 }

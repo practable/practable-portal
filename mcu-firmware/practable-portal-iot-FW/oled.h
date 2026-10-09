@@ -81,6 +81,8 @@ void oled_begin() {  // Dont know what this does
   // display.setCursor(35, 10);
   // display.write("Starting Portal...");
   display.display();
+  //  display.setFont(&FreeSans9pt7b);
+  // display.setTextSize(0.5);
 }
 
 
@@ -172,7 +174,7 @@ void rpi_network_screen() {
   char lineBuffer[126];
 
   display.setCursor(COL_0, 18);
-  sprintf(lineBuffer, "%s %s", stat_names[UP], stat_strings[UP]);
+  sprintf(lineBuffer, "%s%s", stat_names[UP], stat_strings[UP]);
   //display.print(stat_names[UP]);
 
   // display.setCursor(128 - strlen(stat_strings[UP]) * 8, 18);
@@ -286,7 +288,7 @@ void update_oled() {  // char *Vexp, char *Iexp, char *Vsbc, char *Isbc, char *s
   display.setCursor(COL_0, ROW_0);                 //(x,y) (COL, ROW)
   if (sbc_power_cycle_state == 0) {
     char printBuffer[22];
-    sprintf(printBuffer, "%s         V%s", stat_strings[NAME], FIRMWARE_VERSION);
+    sprintf(printBuffer, "%s        V%s", stat_strings[NAME], FIRMWARE_VERSION);
     display.print(printBuffer);
   } else if (sbc_power_cycle_state == 2) {
     display.print(F("Rx SBC Shutdown"));
@@ -304,9 +306,9 @@ void update_oled() {  // char *Vexp, char *Iexp, char *Vsbc, char *Isbc, char *s
   if (sbc_power_cycle_state == 4) {
     // dont run the normal screen
   } else {
-    // run_screen_num(currentScreen);  //currentScreen  NETWORK
+    run_screen_num(currentScreen);  //currentScreen  NETWORK
     //  run_screen_num(POWER);
-    run_screen_num(NETWORK);
+    //  run_screen_num(NETWORK);
     // run_screen_num(STATS);
   }
   // power_stats_screen();

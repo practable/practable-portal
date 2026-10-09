@@ -8,10 +8,12 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include <ArduinoJson.h>
+#include <ctype.h>
 
 #include <Fonts/FreeMonoBold12pt7b.h >
 #include <Fonts/FreeSansBold12pt7b.h >
 #include <Fonts/FreeSansBold9pt7b.h >
+#include <Fonts/FreeSans9pt7b.h>
 
 #include <avr/dtostrf.h>  // needed for SAMD21 only
 
