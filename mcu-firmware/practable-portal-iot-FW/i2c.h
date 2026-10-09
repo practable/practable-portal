@@ -29,7 +29,7 @@ void unstick_bus() {
 
 
 void load_data() {
-  for (int i = TEMP; i <= MAC; i++) {
+  for (int i = NAME; i <= MAC; i++) {
     strcpy(stat_strings[i], sample_strings[i]);
     Serial.println(stat_strings[i]);
   }
