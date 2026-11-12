@@ -21,7 +21,7 @@
 #include <autoDelay.h>
 
 
-#define FIRMWARE_VERSION "1.1.0"
+#define FIRMWARE_VERSION "1.1.1"
 
 
 // Configuration
@@ -88,6 +88,7 @@ bool exp_power_triggered = false;
 uint8_t exp_state = 0;
 uint32_t lastSample_mS;
 bool power_disabled = true;
+float vexp_current_offset = 0;
 //uint16_t lastSample;
 
 uint8_t samples_taken = 0;

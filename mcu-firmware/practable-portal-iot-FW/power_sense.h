@@ -18,7 +18,7 @@ float return_average(int16_t *data, uint8_t num_samples) {
 }
 
 // calculates the power from arrays and stores in global char buffers for printing
-void calculate_power() {
+float calculate_power() {
   float adj_V = return_average(adj_V_array, samples_taken);
   float adj_I = return_average(adj_I_array, samples_taken);
   float sbc_V = return_average(sbc_V_array, samples_taken);
@@ -27,7 +27,7 @@ void calculate_power() {
 
   adj_V = adj_V * VOLTAGE_SCALER * ADJ_VOLTAGE_MULTIPLIER;
   adj_I = (adj_I * VOLTAGE_SCALER);
-  adj_I = ((adj_I - 1.5) * CURRENT_SCALER);  // calculation broken down to interrogate value as it is being calculated
+  adj_I = ((adj_I - 1.5) * CURRENT_SCALER) + vexp_current_offset;  // calculation broken down to interrogate value as it is being calculated
 
   sbc_V = sbc_V * VOLTAGE_SCALER * SBC_VOLTAGE_MULTIPLIER;
   sbc_I = (sbc_I * VOLTAGE_SCALER);
@@ -45,7 +45,7 @@ void calculate_power() {
   dtostrf(sbc_W, 3, 2, sbc_W_buf);
 
 
-
+return adj_I;
 }
 
 

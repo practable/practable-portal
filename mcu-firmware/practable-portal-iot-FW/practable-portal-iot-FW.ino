@@ -72,6 +72,13 @@ void setup() {
   extTrig.begin();
   expTrig.begin();
 
+
+  bool do_cal = check_cal_mode();
+
+  if (do_cal) {
+    run_calibration();
+  }
+
   // Serial.println(F("Loading Dummy Data"));
   // load_data();  // just for testing screen layout
 
@@ -126,5 +133,60 @@ void loop() {
   }
   if (screenRefresh.millisDelay(200)) {
     update_oled();
+  }
+}
+
+
+bool check_cal_mode() {
+  uint32_t timer = 0;
+  if (digitalRead(EXTERN_SBC_TRIGGER)) {
+    while (timer < 2000) {
+      if (!digitalRead(EXTERN_SBC_TRIGGER)) {
+        Serial.println("No Calibnration");
+        return 0;
+      } else {
+        timer++;
+        Serial.println(timer);
+      }
+    }
+    Serial.println("Calibration Triggered");
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
+void run_calibration() {
+  Serial.println("Doing Calibration...");
+  display.clearDisplay();
+  display.setTextColor(WHITE);
+  display.setCursor(0, 20);
+  display.print(F("Self Calibration Mode\n\nPlease remove jumper"));
+  display.display();
+  while (digitalRead(EXTERN_SBC_TRIGGER)) {
+    delay(10);
+  }
+  display.clearDisplay();
+  display.setCursor(0, 20);
+  display.print(F("Calibrating..."));
+  display.display();
+ // delay(10000);
+  // do calibration instead of display
+  display.clearDisplay();
+  display.setCursor(0, 20);
+  display.print(F("Calibration Complete"));
+  display.display();
+  delay(1500);
+}
+
+
+void do_calibration(){
+  bool calibration_complete = false;
+   sample_power();  // throw away first readings
+  while(!calibration_complete){
+    sample_power();  // use second readings
+  float baseline_I_val =  calculate_power();
+  vexp_current_offset = (baseline_I_val*-1.0);
+  calibration_complete = true;
   }
 }
