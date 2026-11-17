@@ -174,8 +174,7 @@ void rpi_network_screen() {
   char lineBuffer[126];
 
   display.setCursor(COL_0, 18);
-  sprintf(lineBuffer, "%s%s", stat_names[UP], stat_strings[UP]);
-  //display.print(stat_names[UP]);
+  sprintf(lineBuffer, "%s%s", stat_names[UP], stat_strings[UP]);  //display.print(stat_names[UP]);
 
   // display.setCursor(128 - strlen(stat_strings[UP]) * 8, 18);
   // display.print(stat_strings[UP]);

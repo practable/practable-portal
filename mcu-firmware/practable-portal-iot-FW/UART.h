@@ -68,18 +68,20 @@ void json_time_format_handler(StaticJsonDocument<JSON_RX_SIZE> &jsonDoc, const c
     days = 0;
   } else {
     target_string[0] = '\0';
-    return;
+   // return;
   }
 
   snprintf(target_string, target_length, "%3lu d %02lu:%02lu:%02lu", days, hours, minutes, seconds);
+  Serial.print(label);
+  Serial.println(target_string);
 }
 
 
-void string_to_uppercase(char *str){
+void string_to_uppercase(char *str) {
   while (*str) {
-        *str = toupper((unsigned char)*str);
-        str++;
-    }
+    *str = toupper((unsigned char)*str);
+    str++;
+  }
 }
 
 

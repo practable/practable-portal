@@ -14,6 +14,13 @@ Global variables use 623 bytes (30%) of dynamic memory, leaving 1425 bytes for l
 V1.0.1
 -> added versioning to screen
 
+V1.1.1
+-> Working on small bug fixes
+
+
+# String Sent by Raspberry Pi UART:
+{"rxed": "{"name": "port99", "temp": "54.00", "cpu": "2.30", "mem": "7.10", "disk": "10.00", "uptime": "3 days, 23:29:12", "ip": "10.42.0.231", "mac": "d8:3a:dd:b0:66:af", "ping": "0.0"}"}
+
 */
 
 
